@@ -68,6 +68,17 @@ pipeline {
                 }
             }
         }
+        
+        stage('Push Docker Image ECR') {
+            steps {
+                dir('application') {
+                    script {
+                        sh "docker push ${ECRREGISTRY}:${SHORTCOMMIT}"
+                    }
+                }
+            }        
+        }
+        
 
     }
 }

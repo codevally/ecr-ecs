@@ -42,8 +42,8 @@ pipeline {
                 dir('application') {
                     script {
                         sh 'ls -al'
-                        imageName = "codevally/flask-app-${SHORTCOMMIT}"
-                        sh "docker build -t ${imageName}:latest ."
+                        imageName = "codevally/flask-app:${SHORTCOMMIT}"
+                        sh "docker build -t ${imageName} ."
                     }
                 }
             }        

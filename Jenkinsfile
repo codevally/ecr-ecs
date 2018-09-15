@@ -14,6 +14,7 @@ pipeline {
     environment {
         BUILDNUMBER = "${env.BUILD_NUMBER}"
         ECRREGISTRY = 'https://376298768100.dkr.ecr.ap-southeast-2.amazonaws.com/ecs-rp'
+        SHORTCOMMIT = ''
     }
 
 
@@ -30,6 +31,7 @@ pipeline {
                 script {
                     gitCommitHash = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
                     shortCommitHash = gitCommitHash.take(7)
+                    env.SHORTCOMMIT = shortCommitHash
                     currentBuild.displayName = "#${BUILD_ID}-${shortCommitHash}"
                 }
             }
@@ -39,7 +41,9 @@ pipeline {
             steps {
                 script {
                     sh 'ls -al'
-                    sh 'docker build -t codevally/flask-app-"${shortCommitHash}":latest .'
+                    sh 'cd application'
+                    sh 'ls -al'
+                    sh 'docker build -t codevally/flask-app-"${env.SHORTCOMMIT}":latest .'
                 }
             }        
         }

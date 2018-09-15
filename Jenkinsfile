@@ -4,22 +4,24 @@ pipeline {
     {
         buildDiscarder(logRotator(numToKeepStr: '10'))
     }
-    
+
     agent {
         node {
-            label 'master' 
+            label 'master'
         }
-    }    
+    }
 
-    //parameters {
-    //    choice(choices: "$environment", description: '', name: 'ENVIRONMENT')
-    //}
-    
+    environment {
+        BUILDNUMBER = env.BUILD_NUMBER
+        ECRREGISTRY = 'https://376298768100.dkr.ecr.ap-southeast-2.amazonaws.com/ecs-rp'
+    }
+
+
     stages {
         stage('Git Checkout') {
             steps {
                 checkout scm
-            
+
             }
         }
 
@@ -32,6 +34,14 @@ pipeline {
                 }
             }
         }
+
+        stage('Docker Build') {
+            steps {
+                script {
+                    sh 'docker build -t codevally/flask-app-${shortCommitHash}:latest .'
+                }
+            }        
+        }
         
         stage('ECR login') {
             steps {
@@ -39,7 +49,7 @@ pipeline {
                     sh 'aws ecr get-login --no-include-email --region ap-southeast-2'
                 }
             }
-        }        
-        
+        }
+
     }
 }

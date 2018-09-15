@@ -16,14 +16,11 @@ pipeline {
     //}
     
     stages {
-    
         stage('Git Checkout') {
-        
             steps {
                 checkout scm
             
             }
-        
         }
 
         stage('Build preparations') {
@@ -36,13 +33,13 @@ pipeline {
             }
         }
         
-        stage('Prepare') {
-        
+        stage('ECR login') {
             steps {
-                checkout scm
-            
+                script {
+                    sh 'aws ecr get-login --no-include-email --region ap-southeast-2'
+                }
             }
-        
         }        
+        
     }
 }

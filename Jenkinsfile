@@ -1,8 +1,13 @@
 pipeline {
 
+    options
+    {
+        buildDiscarder(logRotator(numToKeepStr: '10'))
+    }
+    
     agent {
         node {
-            label 'docker-slave-image' 
+            label 'master' 
         }
     }    
 
@@ -12,16 +17,30 @@ pipeline {
     
     stages {
     
-        stage('Prepare') {
+        stage('Git Checkout') {
         
             steps {
-		ansiColor('xterm') {
-                    checkout scm
-		}
+                checkout scm
             
             }
         
         }
-    
+
+        stage('Build preparations') {
+            script {
+                gitCommitHash = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
+                shortCommitHash = gitCommitHash.take(7)
+                currentBuild.displayName = "#${BUILD_ID}-${shortCommitHash}"
+            }
+        }
+        
+        stage('Prepare') {
+        
+            steps {
+                checkout scm
+            
+            }
+        
+        }        
     }
 }

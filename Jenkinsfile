@@ -39,11 +39,12 @@ pipeline {
 
         stage('Docker Build') {
             steps {
-                script {
-                    sh 'ls -al'
-                    sh 'cd application'
-                    sh 'ls -al'
-                    sh 'docker build -t codevally/flask-app-${env.SHORTCOMMIT}:latest .'
+                dir('application') {
+                    script {
+                        sh 'ls -al'
+                        imageName = "codevally/flask-app-${env.SHORTCOMMIT}"
+                        sh 'docker build -t ${imageName}:latest .'
+                    }
                 }
             }        
         }

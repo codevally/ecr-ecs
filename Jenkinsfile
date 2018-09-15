@@ -6,9 +6,9 @@ pipeline {
         }
     }    
 
-    parameters {
-        choice(choices: "$environment", description: '', name: 'ENVIRONMENT')
-    }
+    //parameters {
+    //    choice(choices: "$environment", description: '', name: 'ENVIRONMENT')
+    //}
     
     stages {
     

@@ -13,7 +13,7 @@ pipeline {
 
     environment {
         //BUILDNUMBER = "${env.BUILD_NUMBER}"
-        ECRREGISTRY = '376298768100.dkr.ecr.ap-southeast-2.amazonaws.com/ecs-rp'
+        ECRREGISTRY = '376298768100.dkr.ecr.ap-southeast-2.amazonaws.com/ecr-codevally'
         def SHORTCOMMIT = ""
     }
 

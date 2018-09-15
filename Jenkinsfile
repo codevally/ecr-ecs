@@ -38,7 +38,8 @@ pipeline {
         stage('Docker Build') {
             steps {
                 script {
-                    sh 'docker build -t codevally/flask-app-${shortCommitHash}:latest .'
+                    sh 'ls -al'
+                    sh 'docker build -t codevally/flask-app-"${shortCommitHash}":latest .'
                 }
             }        
         }

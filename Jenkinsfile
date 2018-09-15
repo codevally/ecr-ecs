@@ -43,7 +43,7 @@ pipeline {
                     sh 'ls -al'
                     sh 'cd application'
                     sh 'ls -al'
-                    sh 'docker build -t codevally/flask-app-"${env.SHORTCOMMIT}":latest .'
+                    sh 'docker build -t codevally/flask-app-${env.SHORTCOMMIT}:latest .'
                 }
             }        
         }

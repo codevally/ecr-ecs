@@ -36,7 +36,7 @@ pipeline {
         stage('ECR login') {
             steps {
                 script {
-                    sh 'aws ecr get-login --no-include-email --region ap-southeast-2'
+                    sh '/home/centos/.local/bin/aws ecr get-login --no-include-email --region ap-southeast-2'
                 }
             }
         }        

@@ -12,7 +12,7 @@ pipeline {
     }
 
     environment {
-        BUILDNUMBER = env.BUILD_NUMBER
+        BUILDNUMBER = "${env.BUILD_NUMBER}"
         ECRREGISTRY = 'https://376298768100.dkr.ecr.ap-southeast-2.amazonaws.com/ecs-rp'
     }
 

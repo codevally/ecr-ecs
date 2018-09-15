@@ -27,10 +27,12 @@ pipeline {
         }
 
         stage('Build preparations') {
-            script {
-                gitCommitHash = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
-                shortCommitHash = gitCommitHash.take(7)
-                currentBuild.displayName = "#${BUILD_ID}-${shortCommitHash}"
+            steps {
+                script {
+                    gitCommitHash = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
+                    shortCommitHash = gitCommitHash.take(7)
+                    currentBuild.displayName = "#${BUILD_ID}-${shortCommitHash}"
+                }
             }
         }
         

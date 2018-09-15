@@ -64,7 +64,7 @@ pipeline {
         stage('ECR login') {
             steps {
                 script {
-                    sh 'eval $(aws ecr get-login --no-include-email --region ap-southeast-2 | sed 's|https://||')'
+                    sh 'eval $(aws ecr get-login --no-include-email --region ap-southeast-2 | sed \'s|https://||\')'
                 }
             }
         }

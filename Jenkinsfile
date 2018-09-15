@@ -13,7 +13,7 @@ pipeline {
 
     environment {
         //BUILDNUMBER = "${env.BUILD_NUMBER}"
-        //ECRREGISTRY = 'https://376298768100.dkr.ecr.ap-southeast-2.amazonaws.com/ecs-rp'
+        ECRREGISTRY = '376298768100.dkr.ecr.ap-southeast-2.amazonaws.com/ecs-rp'
         def SHORTCOMMIT = ""
     }
 
@@ -44,6 +44,18 @@ pipeline {
                         sh 'ls -al'
                         imageName = "codevally/flask-app:${SHORTCOMMIT}"
                         sh "docker build -t ${imageName} ."
+                    }
+                }
+            }        
+        }
+
+        stage('Tag Docker Image') {
+            steps {
+                dir('application') {
+                    script {
+                        sh 'ls -al'
+                        imageName = "codevally/flask-app:${SHORTCOMMIT}"
+                        sh "docker tag ${imageName} ${ECRREGISTRY}:${SHORTCOMMIT}"
                     }
                 }
             }        

@@ -35,7 +35,7 @@ pipeline {
                             -backend-config="region=ap-southeast-2" \
                             -backend-config="bucket=ecs-ecr-tfstate" \
                             -backend-config="key=ecs.tfstate" \
-                            -backend-config="encrypted=true"
+                            -backend-config="encrypt=true"
                         """
                 }
             }

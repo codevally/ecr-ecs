@@ -10,5 +10,6 @@ variable "availability_zones" {
 
 variable "key_name" {
   description = "Name of AWS key pair"
+  default = "ecs"	
 }
 

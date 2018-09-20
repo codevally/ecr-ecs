@@ -29,13 +29,15 @@ pipeline {
 
         stage('init') {
             steps {
-                sh  """
-                    ${TERRAFORM_CMD} init \
-                        -backend-config="region=ap-southeast-2" \
-                        -backend-config="bucket=ecs-ecr-tfstate" \
-                        -backend-config="key=ecs.tfstate" \
-                        -backend-config="encrypted=true"
-                    """
+                dir('terraform') {
+                    sh  """
+                        ${TERRAFORM_CMD} init \
+                            -backend-config="region=ap-southeast-2" \
+                            -backend-config="bucket=ecs-ecr-tfstate" \
+                            -backend-config="key=ecs.tfstate" \
+                            -backend-config="encrypted=true"
+                        """
+                }
             }
         }        
 

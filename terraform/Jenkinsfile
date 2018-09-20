@@ -1,0 +1,44 @@
+pipeline {
+
+    options
+    {
+        buildDiscarder(logRotator(numToKeepStr: '10'))
+    }
+
+    agent {
+        node {
+            label 'master'
+        }
+    }
+
+    environment {
+        TERRAFORM_CMD = 'docker run --network host -w /app \
+            -v ${HOME}/.aws:/root/.aws \
+            -v ${HOME}/.ssh:/root/.ssh \
+            -v `pwd`:/app hashicorp/terraform:light'    
+    }
+
+
+    stages {
+        stage('Git Checkout') {
+            steps {
+                checkout scm
+
+            }
+        }
+
+        stage('init') {
+            steps {
+                sh  """
+                    ${TERRAFORM_CMD} init \
+                        -backend-config="region=ap-southeast-2" \
+                        -backend-config="bucket=ecs-ecr-tfstate" \
+                        -backend-config="key=ecs.tfstate" \
+                        -backend-config="encrypted=true"
+                    """
+            }
+        }        
+
+    }
+}
+

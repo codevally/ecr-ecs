@@ -43,10 +43,3 @@ resource "aws_autoscaling_group" "webapp_on_demand" {
         create_before_destroy = true
     }
 }
-
-data "template_file" "autoscaling_user_data" {
-    template = "${file("autoscaling_user_data.tpl")}"
-    vars {
-        ecs_cluster = "${aws_ecs_cluster.webapp_cluster.name}"
-    }
-}

@@ -2,7 +2,7 @@ resource "aws_alb" "main" {
   
   name = "${var.name_prefix}-webapp-alb"
   subnets = [ "${aws_subnet.subnet.*.id}" ]
-  security_groups = ["${aws_security_group_rule.webapp_albs.id}"]
+  security_groups = ["${aws_security_group.webapp_albs.id}"]
   idle_timeout = 400
   tags {
         Name = "${var.name_prefix}_webapp_alb"

@@ -42,8 +42,8 @@ resource "aws_iam_role_policy_attachment" "ecs-service-role-attachment" {
     policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceRole"
 }
 
-resource "aws_iam_instance_profile" "ecs-instance-profile" {
-    name = "ecs-instance-profile"
+resource "aws_iam_instance_profile" "ecs_instance_profile" {
+    name = "ecs_instance_profile"
     path = "/"
     role = "${aws_iam_role.ecs-instance-role.id}"
     provisioner "local-exec" {

@@ -14,7 +14,7 @@ resource "aws_launch_configuration" "webapp_on_demand" {
     iam_instance_profile = "${aws_iam_instance_profile.ecs_instance_profile.name}"
     user_data = "${data.template_file.ecs_userdata.rendered}"
     key_name = "${var.key_name}"
-    security_groups = ["${var.sg_webapp_instances_id}"]
+    security_groups = ["${aws_security_group.webapp_instances.id}"]
     associate_public_ip_address = true
 
     lifecycle {

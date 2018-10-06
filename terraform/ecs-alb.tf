@@ -1,7 +1,7 @@
 resource "aws_alb" "main" {
   
   name = "${var.name_prefix}-webapp-alb"
-  subnets = [ "${data.aws_availability_zones.available}" ]
+  subnets = [ "${data.aws_availability_zones.available.names}" ]
   security_groups = ["${var.sg_webapp_albs_id}"]
   idle_timeout = 400
   tags {

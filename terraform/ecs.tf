@@ -11,7 +11,7 @@ resource "aws_ecs_service" "webapp_service" {
     task_definition = "${aws_ecs_task_definition.webapp_definition.arn}"
     desired_count = "${var.count_webapp}"
     deployment_minimum_healthy_percent = "${var.minimum_healthy_percent_webapp}"
-    iam_role = "${aws_iam_role.ecs-service-role}"
+    iam_role = "${aws_iam_role.ecs-service-role.arn}"
 
     load_balancer {
         target_group_arn = "${aws_alb_target_group.webapp_tg.arn}"

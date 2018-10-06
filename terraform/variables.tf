@@ -17,3 +17,28 @@ variable "ecs_image_id" {
     ap-southeast-2 = "ami-05b48eda7f92aadbe"
   }
 }
+
+variable "webapp_docker_image_name" {
+    default = "training/webapp_docker_image"
+    description = "Docker image from ECR"
+}
+
+variable "webapp_docker_image_tag" {
+    default = "latest"
+    description = "Docker image version to pull (from tag)"
+}
+
+variable "count_webapp" {
+    default = 2
+    description = "Number of webapp tasks to run"
+}
+
+variable "minimum_healthy_percent_webapp" {
+    default = 50
+    description = "ECS minimum_healthy_percent configuration, set it lower than 100 to allow rolling update without adding new instances"
+}
+
+variable "desired_capacity_on_demand" {
+    default = 2
+    description = "Number of instance to run"
+}

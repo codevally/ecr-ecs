@@ -5,13 +5,13 @@ data "template_file" "ecs_userdata"
 
   vars
   {
-    ECS_CLUSTER    = "${var.cluster_name}"
+    ECS_CLUSTER    = "${aws_ecs_cluster.webapp_cluster.name}"
    }
 }
 resource "aws_launch_configuration" "webapp_on_demand" {
     instance_type = "${var.instance_type}"
     image_id = "${lookup(var.ecs_image_id, var.aws_region)}"
-    iam_instance_profile = "${var.ecs_instance_profile}"
+    iam_instance_profile = "${aws_iam_instance_profile.ecs_instance_profile.name}"
     user_data = "${data.template_file.ecs_userdata.rendered}"
     key_name = "${var.key_name}"
     security_groups = ["${var.sg_webapp_instances_id}"]
@@ -31,7 +31,7 @@ resource "aws_autoscaling_group" "webapp_on_demand" {
     health_check_type = "EC2"
     force_delete = true
     launch_configuration = "${aws_launch_configuration.webapp_on_demand.name}"
-    vpc_zone_identifier = ["${split(",", var.subnet_ids)}"]
+    vpc_zone_identifier = [ "${aws_subnet.subnet.*.id}" ]
 
     tag {
         key = "Name"

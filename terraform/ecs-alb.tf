@@ -2,7 +2,7 @@ resource "aws_alb" "main" {
   
   name = "${var.name_prefix}-webapp-alb"
   subnets = [ "${aws_subnet.subnet.*.id}" ]
-  security_groups = ["${var.sg_webapp_albs_id}"]
+  security_groups = ["${aws_security_group_rule.webapp_albs.id}"]
   idle_timeout = 400
   tags {
         Name = "${var.name_prefix}_webapp_alb"
@@ -16,7 +16,7 @@ resource "aws_alb_target_group" "webapp_tg" {
   name                 = "${var.name_prefix}-webapp-tg"
   port                 = "5000"
   protocol             = "HTTP"
-  vpc_id               = "${var.vpc_id}"
+  vpc_id               = "${aws_vpc.main.id}"
 
   deregistration_delay = 180
 

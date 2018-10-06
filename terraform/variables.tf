@@ -42,3 +42,8 @@ variable "desired_capacity_on_demand" {
     default = 2
     description = "Number of instance to run"
 }
+
+variable "instance_type" {
+    default = "t2.micro"
+    description = "EC2 instance type to use"
+}
